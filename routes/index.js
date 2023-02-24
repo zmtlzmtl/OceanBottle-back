@@ -5,5 +5,8 @@ const router = express.Router();
 // const postsRouter = require("./posts");
 // router.use("/posts", [postsRouter]);
 
+const usersRouter = require('./users.js');
+
+router.use("/", [usersRouter]);
 
 module.exports = router;
