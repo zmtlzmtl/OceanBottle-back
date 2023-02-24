@@ -4,6 +4,9 @@
 .env로 인해 config폴더 생성 후, config.json 파일을 만들어서 
 신동윤에게 해당 내용을 요청한다.
 
+https://developer88.tistory.com/270
+를 통해서 package.josn 을 다운로드 받는다.
+
 ##저장소 연결하기
 https://teamsparta.notion.site/2-4-SQL-9afbf504e37347c7b34523745452ecae
 00. 선행 지식
