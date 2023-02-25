@@ -20,6 +20,7 @@ class plusscriptController {
       res.json({ result: plusscript });
     } catch (error) {
       next(error);
+      return res.status(400).send({ error: error.message });
     }
   };
 }
