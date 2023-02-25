@@ -1,4 +1,4 @@
-const plusscriptService = require("../sevices/plusscript.service");
+const plusscriptService = require("../services/plusscript.service");
 
 class plusscriptController {
   constructor() {
@@ -9,19 +9,18 @@ class plusscriptController {
       const { scriptId, content } = req.body;
 
       if (!scriptId || !content) {
-        console.log(err);
-        return res.status(400).send({ err: err.message });
+        return res.status(400).send("invalid scriptId or content");
       }
 
       const plusscript = await this.plusscriptService.createplusscript({
         scriptId,
-        UserId,
         content,
       });
 
       res.json({ result: plusscript });
     } catch (error) {
       next(error);
+      return res.status(400).send({ error: error.message });
     }
   };
 }
