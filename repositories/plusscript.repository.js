@@ -10,7 +10,7 @@ class plusscriptRepository extends plusScripts {
       userId,
       content,
     });
-    return plusscripts;
+    return plusscript;
   };
 }
 module.exports = plusscriptRepository;
