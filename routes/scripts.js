@@ -10,7 +10,7 @@ router.post('/scripts', authMiddleware, async (req, res) => {
   
     await Scripts.create({
       UserId: userId,
-      category,
+      gerne,
       title,
       content,
     });
@@ -19,7 +19,6 @@ router.post('/scripts', authMiddleware, async (req, res) => {
  
 // 5개 script 랜덤으로 보내기 !!확인필요
 router.get('/scripts', async(req, res) => {
-    //새로고침 버튼을 누를 때 랜덤으로 5개의 숫자 정보를 받아올 수 있는지 체크 (scriptId와 연결)
     //findAll에서 scriptId 기준 랜덤으로 5개의 무작위 Id 의 데이터를 가져올 수 없는지 체크
     const randomScript = await Scripts.findAll({
         attributes: ['scriptId', 'title', 'content', 'gerne'], 
