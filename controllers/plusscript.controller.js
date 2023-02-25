@@ -1,4 +1,4 @@
-const plusscriptService = require("../sevices/plusscript.service");
+const plusscriptService = require("../services/plusscript.service");
 
 class plusscriptController {
   constructor() {
