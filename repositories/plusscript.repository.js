@@ -5,7 +5,7 @@ class PlusscriptRepository extends plusScripts {
     super();
   }
   createplusscript = async ({ scriptId, userId, content }) => {
-    const plusscript = await plusScripts.createplusscript({
+    const plusscript = await plusScripts.create({
       scriptId,
       userId,
       content,
