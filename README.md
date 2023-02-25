@@ -28,3 +28,4 @@ certificate file path: 그냥 엔터
 결국 위처럼 express-database … 서버에 존재하는 데이터베이스 목록이 보여져야 합니다.
 저희가 RDS를 설정할 때 생성한 express_db 데이터베이스를 확인할 수 있습니다.
 .
+pr test
