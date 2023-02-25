@@ -1,11 +1,11 @@
 const { plusScripts } = require("../models");
 
-class plusscriptRepository extends plusScripts {
+class PlusscriptRepository extends plusScripts {
   constructor() {
     super();
   }
   createplusscript = async ({ scriptId, userId, content }) => {
-    const plusscript = await this.plusscriptRepository.createplusscript({
+    const plusscript = await plusScripts.createplusscript({
       scriptId,
       userId,
       content,
@@ -13,4 +13,4 @@ class plusscriptRepository extends plusScripts {
     return plusscript;
   };
 }
-module.exports = plusscriptRepository;
+module.exports = PlusscriptRepository;
