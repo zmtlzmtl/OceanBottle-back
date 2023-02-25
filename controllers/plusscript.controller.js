@@ -9,13 +9,11 @@ class plusscriptController {
       const { scriptId, content } = req.body;
 
       if (!scriptId || !content) {
-        console.log(err);
-        return res.status(400).send({ err: err.message });
+        return res.status(400).send("invalid scriptId or content");
       }
 
       const plusscript = await this.plusscriptService.createplusscript({
         scriptId,
-        UserId,
         content,
       });
 
