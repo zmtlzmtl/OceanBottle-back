@@ -1,7 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // 예시 4~6번째 줄
+<<<<<<< HEAD
 // const postsRouter = require("./posts");
 // router.use("/posts", [postsRouter]);
 const scriptRouter = require('./scripts.routes')
@@ -10,3 +11,11 @@ const usersRouter = require('./users.js');
 router.use("/", [usersRouter,scriptRouter]);
 
 module.exports = router;
+=======
+const UserRouter = require("./users");
+const plusscriptRouter = require("./plusScript.routes");
+
+router.use("/", [UserRouter, plusscriptRouter]);
+
+module.exports = router;
+>>>>>>> final
