@@ -1,4 +1,6 @@
 const { plusScripts } = require("../models");
+const { Scripts } = require("../models");
+
 const { Op } = require("sequelize");
 
 class PlusscriptRepository extends plusScripts {
@@ -14,11 +16,11 @@ class PlusscriptRepository extends plusScripts {
     return plusscript;
   };
 
-  findOneplusscript = async ({ plusScriptId }) => {
-    const plusscript = await plusScripts.findOne({
-      where: { plusScriptId },
+  findOnescript = async ({ ScriptId }) => {
+    const script = await Scripts.findOne({
+      where: { ScriptId },
     });
-    return plusscript;
+    return script;
   };
 
   modifyingPlusscript = async (userId, plusScriptId, comment) => {

@@ -5,7 +5,11 @@ const PlusscriptController = require("../controllers/plusscript.controller");
 const authMiddleware = require("../middlewares/authMiddleware");
 const plusscriptController = new PlusscriptController();
 
-router.post("/", authMiddleware, plusscriptController.createplusscript);
+router.post(
+  "/:scriptId",
+  authMiddleware,
+  plusscriptController.createplusscript
+);
 
 router.patch(
   "/:plusScriptId",
