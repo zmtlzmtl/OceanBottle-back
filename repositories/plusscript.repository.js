@@ -1,4 +1,3 @@
-const { where } = require("sequelize");
 const { plusScripts } = require("../models");
 const { Op } = require("sequelize");
 
@@ -6,21 +5,11 @@ class PlusscriptRepository extends plusScripts {
   constructor() {
     super();
   }
-  createplusscript = async ({
-    ScriptId,
-    UserId,
-    comment,
-    plusScriptId,
-    createdAt,
-    updatedAt,
-  }) => {
+  createplusscript = async ({ ScriptId, UserId, comment }) => {
     const plusscript = await plusScripts.create({
       ScriptId,
       UserId,
       comment,
-      plusScriptId,
-      createdAt,
-      updatedAt,
     });
     return plusscript;
   };
@@ -37,15 +26,11 @@ class PlusscriptRepository extends plusScripts {
       { comment },
       {
         where: {
-          [Op.and]: [{ UserId: userId }, { plusScriptId }],
+          [Op.and]: [{ userId }, { plusScriptId }],
         },
       }
     );
-    // if (!plusscript) {
-    //   return res.status(404).json({ message: "no plus script." });
-    // } else if (plusscript.UserId !== userId) {
-    //   return res.status(401).json({ message: "invalid token." });
-    // }
+
     return plusscript;
   };
 }
