@@ -26,10 +26,13 @@ class ScriptsController{
 
        res.status(200).json({ randomScript : findRandomScript});
     }
-
     
+    //Script 전체 조회
+    getAllScript = async(req, res, next) => {
+        const findAllScript = await this.scriptsService.findAllScript();
 
-    
+        res.status(200).json({ allScript: findAllScript });
+    }
 
     
 };

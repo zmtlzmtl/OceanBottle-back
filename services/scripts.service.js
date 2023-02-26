@@ -19,13 +19,17 @@ class ScriptsService{
     }
 
     //Script 랜덤 5개 가져오기
-    // findRandomscript = async()=> {
-    //     const randomScript = await this.ScriptsRepository.findRandomscript()
+    findRandomscript = async()=> {
+        const randomScripts = await this.ScriptsRepository.findRandomscript()
 
-    //     for(let i = 0; i<5; i++;){
+        for (let i = 0; i < 5; i++){
+        const randomValue = randomScripts[Math.floor(Math.random() * randomScripts.length)];
+       }
+       return randomValue;
+        
+    }
 
-    //     }
-    // }
+    
 
 
 }

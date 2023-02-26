@@ -1,4 +1,3 @@
-const { Script } = require('vm');
 const { Scripts, plusScripts } = require('../models');
 
 class ScriptsRepository{
@@ -28,6 +27,18 @@ class ScriptsRepository{
             attributes: ['genre', 'title', 'content']
         });
         return randomScripts;
+    }
+
+    //Script 전체 조회
+    findAllScript = async() => {
+        const findAllScript = await Scripts.findAll({
+            attributes: [ 'title','genre','id']
+        });
+        // const findAllplusId = await plusScripts.findAll({
+        //     attributes: ['id'],
+        //     where: { ScriptId }
+        // });
+        
     }
 }
 
