@@ -5,6 +5,7 @@ const router = express.Router();
 const UserRouter = require("./users");
 const plusscriptRouter = require("./plusScript.routes");
 
-router.use("/", [UserRouter, plusscriptRouter]);
+router.use("/", [UserRouter]);
+router.use("/plusscript", [plusscriptRouter]);
 
 module.exports = router;
