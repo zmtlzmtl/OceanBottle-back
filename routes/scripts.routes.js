@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const ScriptsController = require('../controllers/scripts.controller');
+const authMiddleware = require('../middlewares/authMiddleware');
 const scriptsController = new ScriptsController();
 
-//script 랜덤 5개 보여주기
-router.get('/', scriptsController.getRandomScript);
-//script 상세보여주기
-router.get('/:scripId/', scriptsController.getScript);
 //first script 생성하기
-router.post('/', scriptsController.createScript);
+router.post('/',authMiddleware, scriptsController.createScript);
+//script 상세보여주기
+router.get('/:scripId/', scriptsController.findOneScript);
+//script 랜덤 5개 보여주기
+router.get('/', scriptsController.findRandomScript);
+//script 전체 조회
+router.get('/scripts',scriptsController.findAllScript);
 
 module.exports = router;

@@ -12,5 +12,11 @@ class PlusscriptRepository extends plusScripts {
     });
     return plusscript;
   };
+
+  findPlusScripts = async ( scriptId ) => {
+    const plusScript = await plusScripts.findAll({where: { scriptId }})
+    return plusScript;
+  }
+     
 }
 module.exports = PlusscriptRepository;

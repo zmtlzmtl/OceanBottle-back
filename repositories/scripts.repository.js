@@ -1,4 +1,4 @@
-const { Scripts, plusScripts } = require('../models');
+const { Scripts } = require('../models');
 
 class ScriptsRepository{
     //Script 생성
@@ -15,16 +15,14 @@ class ScriptsRepository{
         const findScript =  await Scripts.findOne({
             where: {scriptId}
         });
-        const findPlus = await plusScripts.findAll({
-            where: {scriptId}
-        });
-    return [findScript,findPlus];
+        
+    return findScript;
     }
 
     //Script 랜덤 5개 가져오기
-    findRandomScript = async() => {
+    findRandomscript = async() => {
         const randomScripts = await Scripts.findAll({
-            attributes: ['genre', 'title', 'content']
+            attributes: ['scriptId', 'genre', 'title', 'content']
         });
         return randomScripts;
     }
@@ -32,13 +30,20 @@ class ScriptsRepository{
     //Script 전체 조회
     findAllScript = async() => {
         const findAllScript = await Scripts.findAll({
-            attributes: [ 'title','genre','id']
+            attributes: ['scriptId', 'genre', 'title','id']
         });
         // const findAllplusId = await plusScripts.findAll({
         //     attributes: ['id'],
         //     where: { ScriptId }
         // });
-        
+        return fndAllScript;
+    }
+
+    findAllscript = async() => {
+        const randomScripts = await Scripts.findAll({
+            attributes: ['scriptId', 'genre', 'title', 'content']
+        });
+        return randomScripts;
     }
 }
 
