@@ -1,7 +1,8 @@
+const { Script } = require('vm');
 const { Scripts, plusScripts } = require('../models');
 
 class ScriptsRepository{
-    //Script 등록
+    //Script 생성
     createScript = async(userId, genre, title, content) =>{
         await Scripts.create({
             Userid:userId,
@@ -18,7 +19,15 @@ class ScriptsRepository{
         const findPlus = await plusScripts.findAll({
             where: {scriptId}
         });
-    return findScript,findPlus;
+    return [findScript,findPlus];
+    }
+
+    //Script 랜덤 5개 가져오기
+    findRandomScript = async() => {
+        const randomScripts = await Scripts.findAll({
+            attributes: ['genre', 'title', 'content']
+        });
+        return randomScripts;
     }
 }
 

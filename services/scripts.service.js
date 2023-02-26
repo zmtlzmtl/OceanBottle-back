@@ -2,6 +2,7 @@ const ScriptsRepository = require('../repositories/scripts.repository')
 
 class ScriptsService{
     scriptsRepository = new ScriptsRepository();
+
     //Script 생성
     createScript = async(userId,genre, title, content,) =>{
         await this.ScriptsRepository.createScript(userId, genre, title, content)
@@ -9,26 +10,22 @@ class ScriptsService{
         return;
     }
 
-    //Script 상세보기
+    //Script 상세 조회
     findOneScript = async( scriptId ) => {
         const script = await this.ScriptsRepository.findOneScript( scriptId )
        
-        return [
-          {
-            scriptId: script.scriptId,
-            UserId: script.UserId,
-            id: script.id,
-            genre: script.genre,
-            title: script.title,
-            content: script.content,
-            createdAt: script.createdAt,
-            updatedAt: script.updatedAt,
-          },
-          {
-
-          }
-        ];
+        //사용자에게 보여줄 데이터 가공 
+        return script;
     }
+
+    //Script 랜덤 5개 가져오기
+    // findRandomscript = async()=> {
+    //     const randomScript = await this.ScriptsRepository.findRandomscript()
+
+    //     for(let i = 0; i<5; i++;){
+
+    //     }
+    // }
 
 
 }
