@@ -14,6 +14,13 @@ class plusscriptService {
     return plusscript;
   };
 
+  findOnescript = async ({ plusScriptsId }) => {
+    const script = await this.plusscriptRepository.findOnescript({
+      plusScriptsId,
+    });
+    return script;
+  };
+
   modifyingPlusscript = async ({ UserId, plusScriptsId, content }) => {
     const plusscript = await this.plusscriptRepository.modifyingPlusscript({
       plusScriptsId,
@@ -22,10 +29,10 @@ class plusscriptService {
     });
     return plusscript;
   };
-  deletePlusscript = async ({ plusScriptId, userId }) => {
+  deletePlusscript = async ({ plusScriptsId, UserId }) => {
     const plusscript = await this.plusscriptRepository.deletePlusscript({
-      plusScriptId,
-      userId,
+      plusScriptsId,
+      UserId,
     });
     return plusscript;
   };

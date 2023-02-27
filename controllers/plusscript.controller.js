@@ -1,4 +1,5 @@
 const plusscriptService = require("../services/plusscript.service");
+const { plusScripts } = require("../models");
 
 class plusscriptController {
   constructor() {
@@ -38,12 +39,21 @@ class plusscriptController {
       if (!content) {
         return res.status(400).send("require content");
       }
+      // return res.status(400).send("content did not changed.");
+      const existPlusScript = await this.plusscriptService.findOnescript({
+        plusScriptsId: plusScriptId,
+      });
+      if (existPlusScript.content == content) {
+        return res.status(400).send("content need to be changed.");
+      }
+
       const plusscript = await this.plusscriptService.modifyingPlusscript({
         plusScriptsId: plusScriptId,
         UserId: userId,
         content,
       });
-      return res.send({ patched: plusscript });
+
+      return res.json({ patched: plusscript });
     } catch (error) {
       next(error);
       return res.status(400).send({ error: error.message });
@@ -51,19 +61,16 @@ class plusscriptController {
   };
   deletePlusscript = async (req, res, next) => {
     try {
-      const { userId } = req.body;
       const { plusScriptId } = req.params;
-
-      if (!userId || !plusScriptId) {
-        return res.status(400).send("invalid userId, plusScriptId");
-      }
-
+      const { userId } = res.locals.user;
+      // if (!userId || !plusScriptId) {
+      //   return res.status(400).send("invalid userId, plusScriptId");
+      // }
       const plusscript = await this.plusscriptService.deletePlusscript({
-        userId,
-        plusScriptId,
+        UserId: userId,
+        plusScriptsId: plusScriptId,
       });
-
-      res.json({ plusscript });
+      res.json({ deleted: plusscript });
     } catch (error) {
       next(error);
       return res.status(400).send({ error: error.message });
