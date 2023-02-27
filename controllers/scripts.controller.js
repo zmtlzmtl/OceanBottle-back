@@ -22,7 +22,7 @@ class ScriptsController{
 
     //Script 상세 조회
     findOneScript = async( req, res, next) => {
-        const { scriptId } = res.params;
+        const { scriptId } = req.params;
         try {
             const script = await this.scriptsService.findOneScript(scriptId);
             
