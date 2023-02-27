@@ -34,6 +34,13 @@ class plusscriptService {
     });
     return plusscript;
   };
+  deletePlusscript = async ({ plusScriptId, userId }) => {
+    const plusscript = await this.plusscriptRepository.deletePlusscript({
+      plusScriptId,
+      userId,
+    });
+    return plusscript;
+  };
 }
 
 module.exports = plusscriptService;

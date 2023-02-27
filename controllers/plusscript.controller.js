@@ -45,6 +45,26 @@ class plusscriptController {
       return res.status(400).send({ error: error.message });
     }
   };
+  deletePlusscript = async (req, res, next) => {
+    try {
+      const { userId } = req.body;
+      const { plusScriptId } = req.params;
+
+      if (!userId || !plusScriptId) {
+        return res.status(400).send("invalid userId, plusScriptId");
+      }
+
+      const plusscript = await this.plusscriptService.deletePlusscript({
+        userId,
+        plusScriptId,
+      });
+
+      res.json({ plusscript });
+    } catch (error) {
+      next(error);
+      return res.status(400).send({ error: error.message });
+    }
+  };
 }
 
 module.exports = plusscriptController;

@@ -16,14 +16,19 @@ class PlusscriptRepository extends plusScripts {
     return plusscript;
   };
 
-  findPlusScripts = async ( scriptId ) => {
-    const plusScript = await plusScripts.findAll({ 
-      attributes:['plusScriptId', 'UserId','comment','createdAt', 'updatedAt'],
-      where: { ScriptId : scriptId }
+  findPlusScripts = async (scriptId) => {
+    const plusScript = await plusScripts.findAll({
+      attributes: [
+        "plusScriptId",
+        "UserId",
+        "comment",
+        "createdAt",
+        "updatedAt",
+      ],
+      where: { ScriptId: scriptId },
     });
-      return plusScript;
-  }
-     
+    return plusScript;
+  };
 
   findOnescript = async ({ ScriptId }) => {
     const script = await Scripts.findOne({
@@ -41,6 +46,15 @@ class PlusscriptRepository extends plusScripts {
         },
       }
     );
+
+    return plusscript;
+  };
+  deletePlusscript = async (plusScriptId) => {
+    const plusscript = await plusScripts.destroy({
+      where: {
+        [Op.and]: [{ userId }, { plusScriptId }],
+      },
+    });
 
     return plusscript;
   };
