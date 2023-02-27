@@ -1,36 +1,38 @@
 const plusscriptRepository = require("../repositories/plusscript.repository");
-const { plusScripts } = require("../models");
 
 class plusscriptService {
   constructor() {
     this.plusscriptRepository = new plusscriptRepository();
   }
-  createplusscript = async (ScriptId, UserId, comment) => {
-    const isExistScript = await this.plusscriptRepository.findOnescript({
-      ScriptId,
-    });
-    if (!isExistScript) {
-      return res.status(404).json({ message: "never existing plus script." });
-    }
+  createplusscript = async ({ ScriptId, UserId, content, plusScriptId }) => {
     const plusscript = await this.plusscriptRepository.createplusscript({
       ScriptId,
       UserId,
-      comment,
+      content,
+      plusScriptId,
     });
     return plusscript;
   };
 
-  modifyingPlusscript = async (userId, plusScriptId, comment) => {
-    // const isExistPlusScript = await this.plusscriptRepository.findOneplusscript(
-    //   { plusScriptId }
-    // );
-    // if (!isExistPlusScript) {
-    //   return res.status(400).send("no existing plus script.");
-    // }
+  findOnescript = async ({ plusScriptsId }) => {
+    const script = await this.plusscriptRepository.findOnescript({
+      plusScriptsId,
+    });
+    return script;
+  };
+
+  modifyingPlusscript = async ({ UserId, plusScriptsId, content }) => {
     const plusscript = await this.plusscriptRepository.modifyingPlusscript({
-      plusScriptId,
-      userId,
-      comment,
+      plusScriptsId,
+      UserId,
+      content,
+    });
+    return plusscript;
+  };
+  deletePlusscript = async ({ plusScriptsId, UserId }) => {
+    const plusscript = await this.plusscriptRepository.deletePlusscript({
+      plusScriptsId,
+      UserId,
     });
     return plusscript;
   };

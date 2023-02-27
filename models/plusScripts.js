@@ -1,5 +1,5 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 
 /**
  * @param {import("sequelize").Sequelize} sequelize - Sequelize
@@ -15,14 +15,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Users, {
-        targetKey: 'userId',
-        foreignKey: 'UserId',
-        onDelete: 'CASCADE',
+        targetKey: "userId",
+        foreignKey: "UserId",
+        onDelete: "CASCADE",
       });
       this.belongsTo(models.Scripts, {
-        targetKey: 'scriptId',
-        foreignKey: 'ScriptId',
-        onDelete: 'CASCADE',
+        targetKey: "scriptId",
+        foreignKey: "ScriptId",
+        onDelete: "CASCADE",
       });
     }
   }
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      comment: {
+      content: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'plusScripts',
+      modelName: "plusScripts",
     }
   );
   return plusScripts;

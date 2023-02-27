@@ -14,7 +14,15 @@ router.post(
 router.patch(
   "/:plusScriptId",
   authMiddleware,
-  plusscriptController.createplusscript
+  plusscriptController.modifyingPlusscript
 );
+
+router.delete(
+  "/:plusScriptId",
+  authMiddleware,
+  plusscriptController.deletePlusscript
+);
+
+router.get("/:plusScriptId", plusscriptController.findOnescript);
 
 module.exports = router;

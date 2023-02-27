@@ -10,18 +10,18 @@ module.exports = async (req, res, next) => {
     const { Authorization } = req.cookies;
     if (!Authorization) {
       return res.status(403).send({
-        errorMessage: '로그인이 필요한 기능입니다.',
+        errorMessage: "로그인이 필요한 기능입니다.",
       });
     }
 
     const [authType, authToken] = (Authorization ?? "").split(" ");
-  
+    console.log(authType, authToken)
     // 토큰 존재 확인
     if (authType !== "Bearer" || !authToken) {
       res.status(400).json({
         errorMessage: "로그인 후 사용이 가능합니다.",
       });
-      return res.json({"isLogin":"False"});
+      return;
     }
 
     const { userId } = jwt.verify(authToken, KEY);
@@ -33,7 +33,7 @@ module.exports = async (req, res, next) => {
     res.clearCookie('Authorization'); // 인증에 실패하였을 경우 Cookie를 삭제합니다.
     console.error(error);
     return res.status(403).json({
-      errorMessage: '로그인이 필요한 기능입니다.',
+      errorMessage: "로그인이 필요한 기능입니다.",
     });
   }
 };
