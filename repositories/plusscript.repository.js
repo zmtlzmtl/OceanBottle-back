@@ -1,5 +1,4 @@
 const { plusScripts } = require("../models");
-const { Scripts } = require("../models");
 
 const { Op } = require("sequelize");
 
@@ -7,11 +6,12 @@ class PlusscriptRepository extends plusScripts {
   constructor() {
     super();
   }
-  createplusscript = async ({ ScriptId, UserId, comment }) => {
+  createplusscript = async ({ ScriptId, UserId, content, plusScriptId }) => {
     const plusscript = await plusScripts.create({
       ScriptId,
       UserId,
-      comment,
+      content,
+      plusScriptId,
     });
     return plusscript;
   };
@@ -30,29 +30,28 @@ class PlusscriptRepository extends plusScripts {
     return plusScript;
   };
 
-  findOnescript = async ({ ScriptId }) => {
-    const script = await Scripts.findOne({
-      where: { ScriptId },
-    });
+  findOnescript = async ({ plusScriptsId }) => {
+    const script = await plusScripts.findByPk(plusScriptsId);
     return script;
   };
 
-  modifyingPlusscript = async (userId, plusScriptId, comment) => {
+  modifyingPlusscript = async ({ UserId, plusScriptsId, content }) => {
     const plusscript = await plusScripts.update(
-      { comment },
+      { content },
       {
         where: {
-          [Op.and]: [{ userId }, { plusScriptId }],
+          [Op.and]: [{ UserId }, { plusScriptsId }],
         },
       }
     );
 
     return plusscript;
   };
-  deletePlusscript = async (plusScriptId) => {
+
+  deletePlusscript = async ({ plusScriptsId, UserId }) => {
     const plusscript = await plusScripts.destroy({
       where: {
-        [Op.and]: [{ userId }, { plusScriptId }],
+        [Op.and]: [{ UserId }, { plusScriptsId }],
       },
     });
 
