@@ -17,7 +17,7 @@ class ScriptsService{
     //Script 상세 조회
     findOneScript = async( scriptId ) => {
         const script = await this.ScriptsRepository.findOneScript( scriptId )
-        const plusScript  = await this.plusScriptRepository.findPlusScripts();
+        const plusScript  = await this.plusScriptRepository.findPlusScripts( scriptId );
         //사용자에게 보여줄 데이터 가공 
         const result = [
             {
@@ -39,7 +39,7 @@ class ScriptsService{
             createAt:plusScript.createAt,
             updatedAt:plusScript.updatedAt
             }
-    ]   
+    ];   
    
         return result;
     }

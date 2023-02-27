@@ -7,12 +7,13 @@ class ScriptsController{
     createScript = async( req, res, next) => {
         const { userId } = res.locals.user;
         const { genre, title, content } = req.body;
-        try{     
+        try{
             await this.scriptsService.createScript({
-                userId, 
+                userId, //id 추가 필요
                 genre, 
                 title, 
-                content});
+                content
+            });
             res.status(201).json({message: "게시글 등록이 완료되었습니다."})
     }catch(err){
         next(err);
@@ -32,10 +33,10 @@ class ScriptsController{
     }
 
     // Script 랜덤 5개 가져오기
-    findRandomScript =  async(req, res, next) => {
+    findRandomScript = async(req, res, next) => {
         try {
             const findRandomScript = await this.scriptsService.findRandomScript();
-            res.status(200).json({ randomScript : findRandomScript});
+            res.status(200).json({ script : findRandomScript});
         }catch(err){
             next(err);
         }
@@ -46,7 +47,7 @@ class ScriptsController{
     findAllScript = async(req, res, next) => {
         try{
             const findAllScript = await this.scriptsService.findAllScript();
-            res.status(200).json({ findAllScript });
+            res.status(200).json({ script : findAllScript });
         }catch(err){
             next(err);
         }
