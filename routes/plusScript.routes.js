@@ -23,6 +23,4 @@ router.delete(
   plusscriptController.deletePlusscript
 );
 
-router.get("/:plusScriptId", plusscriptController.findOnescript);
-
 module.exports = router;
