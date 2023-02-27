@@ -14,17 +14,11 @@ class plusscriptService {
     return plusscript;
   };
 
-  modifyingPlusscript = async (userId, plusScriptId, comment) => {
-    // const isExistPlusScript = await this.plusscriptRepository.findOneplusscript(
-    //   { plusScriptId }
-    // );
-    // if (!isExistPlusScript) {
-    //   return res.status(400).send("no existing plus script.");
-    // }
+  modifyingPlusscript = async ({ UserId, plusScriptsId, content }) => {
     const plusscript = await this.plusscriptRepository.modifyingPlusscript({
-      plusScriptId,
-      userId,
-      comment,
+      plusScriptsId,
+      UserId,
+      content,
     });
     return plusscript;
   };

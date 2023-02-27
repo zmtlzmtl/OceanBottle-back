@@ -32,20 +32,18 @@ class plusscriptController {
   };
   modifyingPlusscript = async (req, res, next) => {
     try {
-      const { comment } = req.body;
-      const { scriptId } = req.params;
+      const { content } = req.body;
+      const { plusScriptId } = req.params;
       const { userId } = res.locals.user;
-      if (!scriptId || !comment) {
-        return res.status(400).send("require scriptId and comment");
-      } else if (!userId) {
-        return res.status(400).send("invalid cookie");
+      if (!content) {
+        return res.status(400).send("require content");
       }
       const plusscript = await this.plusscriptService.modifyingPlusscript({
-        ScriptId: scriptId,
-        content,
+        plusScriptsId: plusScriptId,
         UserId: userId,
+        content,
       });
-      return res.send({ plusscript });
+      return res.send({ patched: plusscript });
     } catch (error) {
       next(error);
       return res.status(400).send({ error: error.message });
