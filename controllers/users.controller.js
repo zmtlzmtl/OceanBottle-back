@@ -37,8 +37,10 @@ class UsersController {
                 { userId: user.userId },
                 KEY,
             );
+            
             res.cookie("Authorization", `Bearer ${token}`); // JWT를 Cookie로 할당합니다!
-            res.status(200).json({ "message": "로그인에 성공하셨습니다." });
+            res.status(200).json({ "message": "로그인에 성공하셨습니다.", "Authorization": `Bearer ${token}` });
+            
         } catch (error) {
             next(error)
         }
