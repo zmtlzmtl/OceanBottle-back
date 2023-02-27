@@ -27,7 +27,6 @@ module.exports = async (req, res, next) => {
     const { userId } = jwt.verify(authToken, KEY);
     const user = await Users.findByPk(userId);
 
-    res.json({"isLogin":"True"});
     res.locals.user = user;
     next();
   } catch (error) {
@@ -35,7 +34,6 @@ module.exports = async (req, res, next) => {
     console.error(error);
     return res.status(403).json({
       errorMessage: '로그인이 필요한 기능입니다.',
-      "isLogin":"False",
     });
   }
 };
