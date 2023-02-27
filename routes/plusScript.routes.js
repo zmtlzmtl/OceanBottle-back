@@ -12,13 +12,13 @@ router.post(
 );
 
 router.patch(
-  "/patch/:plusScriptId",
+  "/:plusScriptId",
   authMiddleware,
   plusscriptController.modifyingPlusscript
 );
 
 router.delete(
-  "/delete/:plusScriptId",
+  "/:plusScriptId",
   authMiddleware,
   plusscriptController.deletePlusscript
 );
