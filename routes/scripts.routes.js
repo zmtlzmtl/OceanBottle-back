@@ -12,6 +12,6 @@ router.get('/:scripId/', scriptsController.findOneScript);
 //script 랜덤 5개 보여주기
 router.get('/', scriptsController.findRandomScript);
 //script 전체 조회
-router.get('/scripts',scriptsController.findAllScript);
+router.get('/all/',scriptsController.findAllScript);
 
 module.exports = router;

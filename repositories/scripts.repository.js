@@ -36,14 +36,7 @@ class ScriptsRepository{
         //     attributes: ['id'],
         //     where: { ScriptId }
         // });
-        return fndAllScript;
-    }
-
-    findAllscript = async() => {
-        const randomScripts = await Scripts.findAll({
-            attributes: ['scriptId', 'genre', 'title', 'content']
-        });
-        return randomScripts;
+        return findAllScript;
     }
 }
 
