@@ -1,5 +1,4 @@
 const { plusScripts } = require("../models");
-const { Scripts } = require("../models");
 
 const { Op } = require("sequelize");
 
@@ -7,42 +6,43 @@ class PlusscriptRepository extends plusScripts {
   constructor() {
     super();
   }
-  createplusscript = async ({ ScriptId, UserId, comment }) => {
+  createplusscript = async ({ ScriptId, UserId, content, plusScriptId }) => {
     const plusscript = await plusScripts.create({
       ScriptId,
       UserId,
-      comment,
+      content,
+      plusScriptId,
     });
     return plusscript;
   };
 
-  findPlusScripts = async (scriptId) => {
-    const plusScript = await plusScripts.findAll({
-      attributes: [
-        "plusScriptId",
-        "UserId",
-        "comment",
-        "createdAt",
-        "updatedAt",
-      ],
-      where: { ScriptId: scriptId },
-    });
-    return plusScript;
-  };
+  // findPlusScripts = async (scriptId) => {
+  //   const plusScript = await plusScripts.findAll({
+  //     attributes: [
+  //       "plusScriptId",
+  //       "UserId",
+  //       "comment",
+  //       "createdAt",
+  //       "updatedAt",
+  //     ],
+  //     where: { ScriptId: scriptId },
+  //   });
+  //   return plusScript;
+  // };
 
-  findOnescript = async ({ ScriptId }) => {
-    const script = await Scripts.findOne({
-      where: { ScriptId },
-    });
-    return script;
-  };
+  // findOnescript = async ({ scriptId }) => {
+  //   const script = await Scripts.findOne({
+  //     where: { scriptId },
+  //   });
+  //   return script;
+  // };
 
-  modifyingPlusscript = async (userId, plusScriptId, comment) => {
+  modifyingPlusscript = async (UserId, plusScriptId, content) => {
     const plusscript = await plusScripts.update(
       { comment },
       {
         where: {
-          [Op.and]: [{ userId }, { plusScriptId }],
+          [Op.and]: [{ UserId }, { plusScriptId }],
         },
       }
     );
@@ -52,7 +52,7 @@ class PlusscriptRepository extends plusScripts {
   deletePlusscript = async (plusScriptId) => {
     const plusscript = await plusScripts.destroy({
       where: {
-        [Op.and]: [{ userId }, { plusScriptId }],
+        [Op.and]: [{ UserId }, { plusScriptId }],
       },
     });
 

@@ -1,21 +1,15 @@
 const plusscriptRepository = require("../repositories/plusscript.repository");
-const { plusScripts } = require("../models");
 
 class plusscriptService {
   constructor() {
     this.plusscriptRepository = new plusscriptRepository();
   }
-  createplusscript = async (ScriptId, UserId, comment) => {
-    const isExistScript = await this.plusscriptRepository.findOnescript({
-      ScriptId,
-    });
-    if (!isExistScript) {
-      return res.status(404).json({ message: "never existing plus script." });
-    }
+  createplusscript = async ({ ScriptId, UserId, content, plusScriptId }) => {
     const plusscript = await this.plusscriptRepository.createplusscript({
       ScriptId,
       UserId,
-      comment,
+      content,
+      plusScriptId,
     });
     return plusscript;
   };
