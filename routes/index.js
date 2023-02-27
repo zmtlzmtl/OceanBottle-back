@@ -14,5 +14,5 @@ router.use("/scripts", [ScriptRouter]);
 router.use("/", [UserRouter]);
 router.use("/plusscript", [plusscriptRouter]);
 
-module.exports = router;
+module.exports = router; 
 

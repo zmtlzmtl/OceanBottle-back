@@ -3,7 +3,7 @@ const { Users } = require("../models");
 class UsersRepository {
     constructor() {}
 
-    postCreateUser = async ({ id, password}) => {
+    postCreateUser = async ({ id, password }) => {
         const user = await Users.create({
             id,
             password
@@ -11,7 +11,7 @@ class UsersRepository {
         return user;
     }
 
-    postLoginUser = async ({ id }) => {
+    LoginUser = async ({ id }) => {
         const user = await Users.findOne({
             where: {
             id

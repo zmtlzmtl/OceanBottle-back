@@ -4,22 +4,26 @@ class UsersService {
     constructor() {
         this.usersRepository = new UsersRepository();
     }
-    postCreateUser = async ({ id, password }) => {
-        const user = await this.usersRepository.postCreateUser({ id, password });
 
-        if (!user || password !== user.password) {
-            const e = new Error('아이디 또는 비밀번호가 다릅니다.');
+    postCreateUser = async ({ id, password }) => {
+        const isExistUser = await this.usersRepository.LoginUser({ id });
+        
+        if (isExistUser) {
+            const e = new Error("중복 된 아이디가 존재합니다."); 
             e.name = '412';
             throw e; 
         };
-        console.log(user)
+
+        const user = await this.usersRepository.postCreateUser({ id, password });
         return user;
-    }
+    };
+
     postLoginUser = async ({ id, password }) => {
-        const user = await this.usersRepository.postLoginUser({ id })
-        
-        if ( id !== user.id || password !== user.password) {  //이부분의 아이디 검증이 필요할까?
-            const e = new Error('아이디 또는 비밀번호가 다릅니다.');
+        console.log(id, password)
+        const user = await this.usersRepository.LoginUser({ id })
+        console.log(user)
+        if ( !user || password !== user.password) { 
+            const e = new Error("아이디 또는 비밀번호가 다릅니다.");
             e.name = '412';
             throw e;
         };
