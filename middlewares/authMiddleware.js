@@ -7,14 +7,15 @@ const { KEY } = process.env;
 // 유저 인증에 실패하면 403 상태 코드를 반환한다.
 module.exports = async (req, res, next) => {
   try {
-    const { Authorization } = req.cookies;
-    if (!Authorization) {
+    const { authorization } = req.headers;
+
+    if (!authorization) {
       return res.status(403).send({
-        errorMessage: "로그인이 필요한 기능입니다.",
+        errorMessage: "로그인이 필요합니다.",
       });
     }
 
-    const [authType, authToken] = (Authorization ?? "").split(" ");
+    const [authType, authToken] = (authorization ?? "").split("%20");
     console.log(authType, authToken)
     // 토큰 존재 확인
     if (authType !== "Bearer" || !authToken) {
@@ -30,7 +31,7 @@ module.exports = async (req, res, next) => {
     res.locals.user = user;
     next();
   } catch (error) {
-    res.clearCookie('Authorization'); // 인증에 실패하였을 경우 Cookie를 삭제합니다.
+    res.clearCookie('authorization'); // 인증에 실패하였을 경우 Cookie를 삭제합니다.
     console.error(error);
     return res.status(403).json({
       errorMessage: "로그인이 필요한 기능입니다.",
