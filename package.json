@@ -1,7 +1,7 @@
 {
   "name": "230224-wavescript",
   "version": "1.0.0",
-  "description": "",
+  "description": "미니프로젝트 백엔드 저장소",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,5 +21,13 @@
   "devDependencies": {
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.6.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leeseungwoon12/OceanBottle-back.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Leeseungwoon12/OceanBottle-back/issues"
+  },
+  "homepage": "https://github.com/Leeseungwoon12/OceanBottle-back#readme"
 }

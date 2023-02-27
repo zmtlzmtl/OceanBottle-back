@@ -20,8 +20,7 @@ class UsersService {
 
     postLoginUser = async ({ id, password }) => {
         console.log(id, password)
-        const user = await this.usersRepository.LoginUser({ id })
-        console.log(user)
+        const user = await this.usersRepository.LoginUser({ id })        
         if ( !user || password !== user.password) { 
             const e = new Error("아이디 또는 비밀번호가 다릅니다.");
             e.name = '412';

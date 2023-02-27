@@ -13,9 +13,10 @@ class ScriptsController{
                 genre, 
                 title, 
                 content
-            });
+        });
             res.status(201).json({message: "게시글 등록이 완료되었습니다."})
     }catch(err){
+        console.log(err);
         next(err);
     }
 };
