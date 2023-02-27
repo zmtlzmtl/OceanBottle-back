@@ -2,15 +2,16 @@ const { Scripts } = require('../models');
 
 class ScriptsRepository{
     //Script 생성
-    createScript = async(userId, genre, title, content) =>{
-        await Scripts.create({
-            Userid:userId,
-            genre, title, content
+    createScript = async({userId, genre, title, content}) =>{
+        const createData = await Scripts.create({
+            UserId:userId,
+            genre, 
+            title, 
+            content
         });
-
-        return;
+        return createData;
     }
-    //Script 상세 조회
+    //Script 상세 조 회
     findOneScript = async(scriptId) => {
         const findScript =  await Scripts.findOne({
             where: {scriptId}

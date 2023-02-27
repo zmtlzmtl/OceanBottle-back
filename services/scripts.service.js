@@ -8,8 +8,8 @@ class ScriptsService{
     }
     
     //Script 생성
-    createScript = async(userId,genre, title, content,) =>{
-        await this.scriptsRepository.createScript(userId, genre, title, content)
+    createScript = async({userId,genre, title, content}) =>{       
+        await this.scriptsRepository.createScript({userId, genre, title, content})
         
         return;
     }

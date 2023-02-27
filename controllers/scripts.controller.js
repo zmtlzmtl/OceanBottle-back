@@ -13,16 +13,17 @@ class ScriptsController{
                 genre, 
                 title, 
                 content
-            });
+        });
             res.status(201).json({message: "게시글 등록이 완료되었습니다."})
     }catch(err){
+        console.log(err);
         next(err);
     }
 };
 
     //Script 상세 조회
     findOneScript = async( req, res, next) => {
-        const { scriptId } = res.params;
+        const { scriptId } = req.params;
         try {
             const script = await this.scriptsService.findOneScript(scriptId);
             
