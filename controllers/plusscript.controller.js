@@ -76,6 +76,18 @@ class plusscriptController {
       return res.status(400).send({ error: error.message });
     }
   };
+  findOnescript = async (req, res, next) => {
+    try {
+      const { plusScriptId } = req.params;
+      const plusscript = await this.plusscriptService.findOnescript({
+        plusScriptsId: plusScriptId,
+      });
+      return res.status(200).send({ plusscript });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).send({ err: err.message });
+    }
+  };
 }
 
 module.exports = plusscriptController;
