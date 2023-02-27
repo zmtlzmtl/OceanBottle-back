@@ -3,7 +3,7 @@ const ScriptsService = require('../services/scripts.service');
 class ScriptsController{
     scriptsService = new ScriptsService();
 
-    //Script 생성
+    //create
     createScript = async( req, res, next) => {
         const { userId } = res.locals.user;
         const { genre, title, content } = req.body;
@@ -21,40 +21,47 @@ class ScriptsController{
     }
 };
 
-    //Script 상세 조회
-    findOneScript = async( req, res, next) => {
+    //getAll
+    getAllController = async(req, res, next) => {
+        const scripts = await this.scriptsService.getAllService();
+
+        res.status(200).json({ scripts });
+    }
+
+    //getDetail
+    getDetailController = async(req, res, next) => {
         const { scriptId } = req.params;
-        try {
-            const script = await this.scriptsService.findOneScript(scriptId);
-            
-            res.status(200).json({ script: script })
-        }catch(err){
-            next(err);
-        }
+        const scripts = await this.scriptsService.getDetailService({ scriptId });
+
+        res.status(200).json({ scripts });
     }
 
-    // Script 랜덤 5개 가져오기
-    findRandomScript = async(req, res, next) => {
-        try {
-            const findRandomScript = await this.scriptsService.findRandomScript();
-            res.status(200).json({ script : findRandomScript});
-        }catch(err){
-            next(err);
-        }
-        
-    }
-    
-    //Script 전체 조회 contributor , status 상의 후 추가
-    findAllScript = async(req, res, next) => {
-        try{
-            const findAllScript = await this.scriptsService.findAllScript();
-            res.status(200).json({ script : findAllScript });
-        }catch(err){
-            next(err);
-        }
-    };
+    //update
+    updateController = async(req, res, next) => {
+        const { scriptId } = req.params;
+        const { genre, title, content } = req.body;
+        await this.scriptsService.updateService( { scriptId, genre, title, content } );
 
-    
+        res.status(200).json({message : "게시물 수정이 완료되었습니다."})
+    }
+
+    //delete
+    deleteController = async(req, res, next)=> {
+        const { scriptId } = req.params;
+        console.log(scriptId);
+        await this.scriptsService.deleteService({ scriptId });
+
+        res.status(200).json({ message : "게시물 삭제가 완료 되었습니다."})
+    }
+
+    //getRandom
+    getRandomController = async(req, res, next) => {
+        const randomScripts = await this.scriptsService.getRandomService();
+
+        res.status(200).json({ randomScripts });
+    }
+
+   
 };
 
 module.exports = ScriptsController;
