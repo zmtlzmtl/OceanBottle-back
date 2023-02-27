@@ -7,12 +7,12 @@ const router = express.Router();
 // router.use("/posts", [postsRouter]);
 
 const ScriptRouter = require('./scripts.routes')
-const UserRouter = require("./users");
+const UserRouter = require("./users.routes");
 const plusscriptRouter = require("./plusScript.routes");
 
 router.use("/scripts", [ScriptRouter]);
 router.use("/", [UserRouter]);
 router.use("/plusscript", [plusscriptRouter]);
 
-module.exports = router;
+module.exports = router; 
 
