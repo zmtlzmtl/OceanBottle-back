@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use("/", [routes]);
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 app.get("/", (req, res) => {
   res.send("Hello Front!!!");

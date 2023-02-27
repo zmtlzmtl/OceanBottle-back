@@ -1,5 +1,7 @@
 const errorMiddleware = (error, req, res, next) => {
   switch (error.name) {
+    case "400":
+      return res.status(400).json({ message: error.message });
     case "401":
       return res.status(401).json({ message: error.message }); //권한X
     case "404":
