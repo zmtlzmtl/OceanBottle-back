@@ -11,7 +11,7 @@ class ScriptsRepository{
         });
         return createData;
     }
-    //Script 상세 조회
+    //Script 상세 조 회
     findOneScript = async(scriptId) => {
         const findScript =  await Scripts.findOne({
             where: {scriptId}
