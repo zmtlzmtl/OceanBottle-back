@@ -40,14 +40,14 @@ class plusscriptController {
       }
       // return res.status(400).send("content did not changed.");
       const existPlusScript = await this.plusscriptService.findOnescript({
-        plusScriptsId: plusScriptId,
+        plusScriptId,
       });
       if (existPlusScript.content == content) {
         return res.status(400).send("content need to be changed.");
       }
 
       const plusscript = await this.plusscriptService.modifyingPlusscript({
-        plusScriptsId: plusScriptId,
+        plusScriptId,
         UserId: userId,
         content,
       });
@@ -67,7 +67,7 @@ class plusscriptController {
       // }
       const plusscript = await this.plusscriptService.deletePlusscript({
         UserId: userId,
-        plusScriptsId: plusScriptId,
+        plusScriptId,
       });
       res.json({ deleted: plusscript });
     } catch (error) {
@@ -79,7 +79,7 @@ class plusscriptController {
     try {
       const { plusScriptId } = req.params;
       const plusscript = await this.plusscriptService.findOnescript({
-        plusScriptsId: plusScriptId,
+        plusScriptId,
       });
       return res.status(200).send({ plusscript });
     } catch (err) {
