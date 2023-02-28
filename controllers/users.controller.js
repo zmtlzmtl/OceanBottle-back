@@ -33,12 +33,20 @@ class UsersController {
         try {
             const user = await this.usersService.postLoginUser({ id, password });
 
+            let expires = new Date();
+            expires.setMinutes(expires.getMinutes() + 60);
+
             const token = jwt.sign(
                 { userId: user.userId },
                 KEY,
+                { expiresIn: '1h' },
             );
             
-            res.cookie("Authorization", `Bearer ${token}`); // JWT를 Cookie로 할당합니다!
+            
+            res.cookie("Authorization", `Bearer ${token}`, {
+                expires: expires, 
+            });
+            
             res.status(200).json({ "message": "로그인에 성공하셨습니다.", "Authorization": `Bearer ${token}` });
             
         } catch (error) {

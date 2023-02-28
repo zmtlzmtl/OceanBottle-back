@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
       });
     }
 
-    const [authType, authToken] = (authorization ?? "").split("%20");
+    const [authType, authToken] = (authorization ?? "").split(" ");
     console.log(authType, authToken)
     // 토큰 존재 확인
     if (authType !== "Bearer" || !authToken) {
