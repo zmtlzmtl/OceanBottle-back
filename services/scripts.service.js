@@ -54,11 +54,6 @@ class ScriptsService{
     //getRandom
     getRandomService = async () => {
         const randomScripts = await this.scriptsRepository.getRandomRepo();
-        let randomData = [];
-        for(let i = 0; i <5; i++){
-            randomData = randomScripts[Math.floor(Math.random() * 10)]
-        }
-        
         
         return randomScripts;
     }
