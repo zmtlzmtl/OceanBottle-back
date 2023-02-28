@@ -81,6 +81,21 @@ class plusscriptController {
       return res.status(400).send({ err: err.message });
     }
   };
+  getting3plusscript = async (req, res) => {
+    try {
+      let { page } = req.query;
+      page = parseInt(page);
+      // console.log(page); => 1
+      const plusscript3s = await this.plusscriptService.getting3plusscript({
+        page,
+      });
+      // console.log(plusscript3s);
+      return res.send({ plusscript3s });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).send({ err: err.message });
+    }
+  };
 }
 
 module.exports = plusscriptController;
