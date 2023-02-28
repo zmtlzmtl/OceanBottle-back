@@ -4,12 +4,11 @@ class plusscriptService {
   constructor() {
     this.plusscriptRepository = new plusscriptRepository();
   }
-  createplusscript = async ({ ScriptId, UserId, content, plusScriptId }) => {
+  createplusscript = async ({ ScriptId, UserId, content }) => {
     const plusscript = await this.plusscriptRepository.createplusscript({
       ScriptId,
       UserId,
       content,
-      plusScriptId,
     });
     return plusscript;
   };
