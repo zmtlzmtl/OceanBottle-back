@@ -48,10 +48,10 @@ class plusscriptController {
           content,
         });
       }
-      const findquery2 = await this.plusscriptService.findOnescript({
+      const updatedResult = await this.plusscriptService.findOnescript({
         plusScriptId,
       });
-      return res.json({ findquery2 });
+      return res.json({ updatedResult });
     } catch (error) {
       return res.status(400).send({ error: error.message });
     }
@@ -60,14 +60,15 @@ class plusscriptController {
     try {
       const { plusScriptId } = req.params;
       const { userId } = res.locals.user;
-      // if (!userId || !plusScriptId) {
-      //   return res.status(400).send("invalid userId, plusScriptId");
-      // }
-      const plusscript = await this.plusscriptService.deletePlusscript({
+      const willdeleted = await this.plusscriptService.findOnescript({
+        plusScriptId,
+        UserId: userId,
+      });
+      res.json({ deleted: willdeleted });
+      await this.plusscriptService.deletePlusscript({
         UserId: userId,
         plusScriptId,
       });
-      res.json({ deleted: plusscript });
     } catch (error) {
       next(error);
       return res.status(400).send({ error: error.message });
