@@ -1,14 +1,10 @@
 const plusscriptService = require("../services/plusscript.service");
-const Joi = require("joi");
-const authSchema = Joi.object({
-  content: Joi.string().required(),
-});
 
 class plusscriptController {
   constructor() {
     this.plusscriptService = new plusscriptService();
   }
-  createplusscript = async (req, res, next) => {
+  createplusscript = async (req, res) => {
     try {
       const { content } = req.body;
       const { scriptId } = req.params;
@@ -27,7 +23,7 @@ class plusscriptController {
       return res.status(400).send({ error: error.message });
     }
   };
-  modifyingPlusscript = async (req, res, next) => {
+  modifyingPlusscript = async (req, res) => {
     try {
       const { content } = req.body;
       const { plusScriptId } = req.params;
@@ -56,7 +52,7 @@ class plusscriptController {
       return res.status(400).send({ error: error.message });
     }
   };
-  deletePlusscript = async (req, res, next) => {
+  deletePlusscript = async (req, res) => {
     try {
       const { plusScriptId } = req.params;
       const { userId } = res.locals.user;
@@ -70,11 +66,10 @@ class plusscriptController {
         plusScriptId,
       });
     } catch (error) {
-      next(error);
       return res.status(400).send({ error: error.message });
     }
   };
-  findOnescript = async (req, res, next) => {
+  findOnescript = async (req, res) => {
     try {
       const { plusScriptId } = req.params;
       const plusscript = await this.plusscriptService.findOnescript({
