@@ -35,6 +35,12 @@ class plusscriptService {
     });
     return plusscript;
   };
+  getting3plusscript = async ({ page }) => {
+    const plusscript3s = await this.plusscriptRepository.getting3plusscript({
+      page,
+    });
+    return plusscript3s;
+  };
 }
 
 module.exports = plusscriptService;

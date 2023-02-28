@@ -1,6 +1,7 @@
 const { plusScripts } = require("../models");
 
 const { Op } = require("sequelize");
+const sequelize = require("sequelize");
 
 class PlusscriptRepository extends plusScripts {
   constructor() {
@@ -55,6 +56,15 @@ class PlusscriptRepository extends plusScripts {
     });
 
     return plusscript;
+  };
+
+  getting3plusscript = async ({ page }) => {
+    let plusscript3s = await plusScripts.findAll({
+      order: sequelize.col("createdAt"),
+      limit: 3,
+      offset: page * 3,
+    });
+    return plusscript3s;
   };
 }
 module.exports = PlusscriptRepository;
