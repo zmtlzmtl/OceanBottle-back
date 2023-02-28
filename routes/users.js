@@ -70,7 +70,7 @@ router.post('/login', async (req, res) => {
   });
 
   //연습
-  router.get('/front', authMiddleware, async (req,res)=> {
+  router.get('/front', authMiddleware, async (req, res)=> {
       res.status(200).json({isUser: 'true'})
   });
 
