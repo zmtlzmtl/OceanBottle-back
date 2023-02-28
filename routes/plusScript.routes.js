@@ -1,28 +1,24 @@
 const express = require("express");
-const router = express.Router();
+const plusrouter = express.Router({ mergeParams: true });
 
 const PlusscriptController = require("../controllers/plusscript.controller");
 const authMiddleware = require("../middlewares/authMiddleware");
 const plusscriptController = new PlusscriptController();
 
-router.post(
-  "/:scriptId",
-  authMiddleware,
-  plusscriptController.createplusscript
-);
+plusrouter.post("/", authMiddleware, plusscriptController.createplusscript);
 
-router.patch(
+plusrouter.patch(
   "/:plusScriptId",
   authMiddleware,
   plusscriptController.modifyingPlusscript
 );
 
-router.delete(
+plusrouter.delete(
   "/:plusScriptId",
   authMiddleware,
   plusscriptController.deletePlusscript
 );
 
-router.get("/:plusScriptId", plusscriptController.findOnescript);
+plusrouter.get("/:plusScriptId", plusscriptController.findOnescript);
 
-module.exports = router;
+module.exports = plusrouter;
