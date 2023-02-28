@@ -7,6 +7,9 @@ class ScriptsController{
     createScript = async( req, res, next) => {
         const { userId } = res.locals.user;
         const { genre, title, content } = req.body;
+        if(!userId){
+            return{message : "로그인 후 이용 가능합니다."}
+        }
         try{
             await this.scriptsService.createScript({
                 userId, //id 추가 필요
