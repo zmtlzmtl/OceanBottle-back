@@ -1,5 +1,8 @@
 const plusscriptService = require("../services/plusscript.service");
-const { plusScripts } = require("../models");
+const Joi = require("joi");
+const authSchema = Joi.object({
+  content: Joi.string().required(),
+});
 
 class plusscriptController {
   constructor() {
@@ -10,12 +13,8 @@ class plusscriptController {
       const { content } = req.body;
       const { scriptId } = req.params;
       const { userId } = res.locals.user;
-
       if (!content) {
-        return res.status(400).send("invalid content");
-      }
-      if (!scriptId) {
-        return res.status(404).json({ message: "Script is not exist." });
+        return res.status(400).send("content is required.");
       }
       const plusscript = await this.plusscriptService.createplusscript({
         ScriptId: scriptId,
@@ -25,8 +24,6 @@ class plusscriptController {
 
       res.json({ plusscript });
     } catch (error) {
-      next(error);
-      console.log(error);
       return res.status(400).send({ error: error.message });
     }
   };
@@ -36,25 +33,26 @@ class plusscriptController {
       const { plusScriptId } = req.params;
       const { userId } = res.locals.user;
       if (!content) {
-        return res.status(400).send("require content");
+        return res.status(400).send("content is required.");
       }
-      // return res.status(400).send("content did not changed.");
       const existPlusScript = await this.plusscriptService.findOnescript({
         plusScriptId,
       });
       if (existPlusScript.content == content) {
         return res.status(400).send("content need to be changed.");
       }
-
-      const plusscript = await this.plusscriptService.modifyingPlusscript({
+      if (content) {
+        await this.plusscriptService.modifyingPlusscript({
+          plusScriptId,
+          UserId: userId,
+          content,
+        });
+      }
+      const findquery2 = await this.plusscriptService.findOnescript({
         plusScriptId,
-        UserId: userId,
-        content,
       });
-
-      return res.json({ patched: plusscript });
+      return res.json({ findquery2 });
     } catch (error) {
-      next(error);
       return res.status(400).send({ error: error.message });
     }
   };
