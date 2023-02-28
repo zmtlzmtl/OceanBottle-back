@@ -1,4 +1,5 @@
 const { Scripts, Users, plusScripts, } = require('../models');
+const { Sequelize } = require("sequelize")
 
 class ScriptsRepository{
     //create
@@ -96,11 +97,13 @@ class ScriptsRepository{
     }
     //getRandom
     getRandomRepo = async() => {
-        const randomScripts = await Scripts.findAll({
-            attributes: ['genre','title','content']
-            
-        })
-        return randomScripts;
+        const scripts = await Scripts.findAll({ 
+            attributes: ["genre", "title", "content"],
+            order: Sequelize.literal('rand()'), 
+            limit: 5 
+        });
+    
+        return scripts;
     }
 
     
