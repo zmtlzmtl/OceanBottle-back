@@ -6,12 +6,11 @@ class PlusscriptRepository extends plusScripts {
   constructor() {
     super();
   }
-  createplusscript = async ({ ScriptId, UserId, content, plusScriptId }) => {
+  createplusscript = async ({ ScriptId, UserId, content }) => {
     const plusscript = await plusScripts.create({
       ScriptId,
       UserId,
       content,
-      plusScriptId,
     });
     return plusscript;
   };

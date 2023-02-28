@@ -7,7 +7,7 @@ class plusscriptController {
   }
   createplusscript = async (req, res, next) => {
     try {
-      const { content, plusScriptId } = req.body;
+      const { content } = req.body;
       const { scriptId } = req.params;
       const { userId } = res.locals.user;
 
@@ -21,7 +21,6 @@ class plusscriptController {
         ScriptId: scriptId,
         UserId: userId,
         content,
-        plusScriptId,
       });
 
       res.json({ plusscript });
