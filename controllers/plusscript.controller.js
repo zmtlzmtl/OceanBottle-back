@@ -1,21 +1,26 @@
 const plusscriptService = require("../services/plusscript.service");
-const { plusScripts } = require("../models");
-
+const Joi = require("joi");
 class plusscriptController {
   constructor() {
     this.plusscriptService = new plusscriptService();
   }
-  createplusscript = async (req, res, next) => {
+  createplusscript = async (req, res) => {
     try {
+      const contentschema = Joi.object({
+        content: Joi.string().required(),
+      });
+
       const { content } = req.body;
       const { scriptId } = req.params;
       const { userId } = res.locals.user;
 
-      if (!content) {
-        return res.status(400).send("invalid content");
+      let tempresult = contentschema.validate(req.body);
+      if (tempresult.error) {
+        return res.status(400).json(tempresult.error.details[0].message);
       }
+
       if (!scriptId) {
-        return res.status(404).json({ message: "Script is not exist." });
+        return res.status(400).json({ msg: "scriptId is required." });
       }
       const plusscript = await this.plusscriptService.createplusscript({
         ScriptId: scriptId,
@@ -25,66 +30,97 @@ class plusscriptController {
 
       res.json({ plusscript });
     } catch (error) {
-      next(error);
-      console.log(error);
-      return res.status(400).send({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
   };
-  modifyingPlusscript = async (req, res, next) => {
+  modifyingPlusscript = async (req, res) => {
     try {
       const { content } = req.body;
       const { plusScriptId } = req.params;
       const { userId } = res.locals.user;
       if (!content) {
-        return res.status(400).send("require content");
+        return res.status(400).json({ msg: "plus script is required." });
       }
-      // return res.status(400).send("content did not changed.");
       const existPlusScript = await this.plusscriptService.findOnescript({
-        plusScriptsId: plusScriptId,
+        plusScriptId,
       });
+
+      if (existPlusScript == null)
+        return res.status(400).json({ msg: "theres no existing plus script." });
+
       if (existPlusScript.content == content) {
-        return res.status(400).send("content need to be changed.");
+        return res.status(400).json({ msg: "content need to be changed." });
       }
 
-      const plusscript = await this.plusscriptService.modifyingPlusscript({
-        plusScriptsId: plusScriptId,
+      await this.plusscriptService.modifyingPlusscript({
+        plusScriptId,
         UserId: userId,
         content,
       });
 
-      return res.json({ patched: plusscript });
+      const updatedResult = await this.plusscriptService.findOnescript({
+        plusScriptId,
+      });
+      return res.json({ updatedResult });
     } catch (error) {
-      next(error);
-      return res.status(400).send({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
   };
-  deletePlusscript = async (req, res, next) => {
+  deletePlusscript = async (req, res) => {
     try {
       const { plusScriptId } = req.params;
       const { userId } = res.locals.user;
-      // if (!userId || !plusScriptId) {
-      //   return res.status(400).send("invalid userId, plusScriptId");
-      // }
-      const plusscript = await this.plusscriptService.deletePlusscript({
+      const willdeleted = await this.plusscriptService.findOnescript({
+        plusScriptId,
         UserId: userId,
-        plusScriptsId: plusScriptId,
       });
-      res.json({ deleted: plusscript });
+      if (!plusScriptId)
+        return res.status(400).json({ msg: "plus script id is required." });
+      if (willdeleted == null)
+        return res.status(400).send({ msg: "theres no to be deleted." });
+
+      res.json({ deleted: willdeleted });
+      await this.plusscriptService.deletePlusscript({
+        UserId: userId,
+        plusScriptId,
+      });
     } catch (error) {
-      next(error);
       return res.status(400).send({ error: error.message });
     }
   };
-  findOnescript = async (req, res, next) => {
+  findOnescript = async (req, res) => {
     try {
       const { plusScriptId } = req.params;
       const plusscript = await this.plusscriptService.findOnescript({
-        plusScriptsId: plusScriptId,
+        plusScriptId,
       });
-      return res.status(200).send({ plusscript });
-    } catch (err) {
-      console.log(err);
-      return res.status(400).send({ err: err.message });
+      if (!plusScriptId)
+        return res.status(400).json({ msg: "plus script input required." });
+      if (plusscript == null)
+        return res.status(400).json({ msg: "there is no plus script" });
+      return res.status(200).json({ plusscript });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ error: error.message });
+    }
+  };
+  getting3plusscript = async (req, res) => {
+    try {
+      let { page } = req.query;
+      page = parseInt(page);
+      if (!page) {
+        return res.status(400).json({ msg: "page input required." });
+      }
+      const plusscript3s = await this.plusscriptService.getting3plusscript({
+        page,
+      });
+      if (plusscript3s == "")
+        return res.status(400).json({ msg: "no more plus script" });
+      console.log(plusscript3s);
+      return res.json({ plusscript3s });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ error: error.message });
     }
   };
 }

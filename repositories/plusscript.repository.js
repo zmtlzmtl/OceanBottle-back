@@ -1,6 +1,7 @@
 const { plusScripts } = require("../models");
 
 const { Op } = require("sequelize");
+const sequelize = require("sequelize");
 
 class PlusscriptRepository extends plusScripts {
   constructor() {
@@ -29,17 +30,17 @@ class PlusscriptRepository extends plusScripts {
     return plusScript;
   };
 
-  findOnescript = async ({ plusScriptsId }) => {
-    const script = await plusScripts.findByPk(plusScriptsId);
+  findOnescript = async ({ plusScriptId }) => {
+    const script = await plusScripts.findByPk(plusScriptId);
     return script;
   };
 
-  modifyingPlusscript = async ({ UserId, plusScriptsId, content }) => {
+  modifyingPlusscript = async ({ UserId, plusScriptId, content }) => {
     const plusscript = await plusScripts.update(
       { content },
       {
         where: {
-          [Op.and]: [{ UserId }, { plusScriptsId }],
+          [Op.and]: [{ UserId }, { plusScriptId }],
         },
       }
     );
@@ -47,14 +48,23 @@ class PlusscriptRepository extends plusScripts {
     return plusscript;
   };
 
-  deletePlusscript = async ({ plusScriptsId, UserId }) => {
+  deletePlusscript = async ({ plusScriptId, UserId }) => {
     const plusscript = await plusScripts.destroy({
       where: {
-        [Op.and]: [{ UserId }, { plusScriptsId }],
+        [Op.and]: [{ UserId }, { plusScriptId }],
       },
     });
 
     return plusscript;
+  };
+
+  getting3plusscript = async ({ page }) => {
+    let plusscript3s = await plusScripts.findAll({
+      order: sequelize.col("createdAt"),
+      limit: 3,
+      offset: page * 3,
+    });
+    return plusscript3s;
   };
 }
 module.exports = PlusscriptRepository;

@@ -13,27 +13,33 @@ class plusscriptService {
     return plusscript;
   };
 
-  findOnescript = async ({ plusScriptsId }) => {
+  findOnescript = async ({ plusScriptId }) => {
     const script = await this.plusscriptRepository.findOnescript({
-      plusScriptsId,
+      plusScriptId,
     });
     return script;
   };
 
-  modifyingPlusscript = async ({ UserId, plusScriptsId, content }) => {
+  modifyingPlusscript = async ({ UserId, plusScriptId, content }) => {
     const plusscript = await this.plusscriptRepository.modifyingPlusscript({
-      plusScriptsId,
+      plusScriptId,
       UserId,
       content,
     });
     return plusscript;
   };
-  deletePlusscript = async ({ plusScriptsId, UserId }) => {
+  deletePlusscript = async ({ plusScriptId, UserId }) => {
     const plusscript = await this.plusscriptRepository.deletePlusscript({
-      plusScriptsId,
+      plusScriptId,
       UserId,
     });
     return plusscript;
+  };
+  getting3plusscript = async ({ page }) => {
+    const plusscript3s = await this.plusscriptRepository.getting3plusscript({
+      page,
+    });
+    return plusscript3s;
   };
 }
 
