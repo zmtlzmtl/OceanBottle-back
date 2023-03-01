@@ -8,7 +8,7 @@ class UsersService {
     postCreateUser = async ({ id, password }) => {
         const isExistUser = await this.usersRepository.LoginUser({ id });
         
-        const re_id = /^[a-zA-Z0-9]{5,10}$/;
+        const re_id = /^[a-z0-9]{5,10}$/;
         const re_password = /^[a-zA-Z0-9`~!@#$%^&*()-_=+]{8,}$/;
 
         if (isExistUser) {
