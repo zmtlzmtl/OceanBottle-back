@@ -40,7 +40,11 @@ class UsersService {
         return user;
     }
     myPage = async ({ userId, id }) => {
-        const page = await this.usersRepository.myPage({ userId, id })
+        const myScript = await this.usersRepository.myScript({ userId, id });
+        const myPlusScript = await this.usersRepository.myScript({ userId, id });
+        
+        const page = {id, myScript, myPlusScript}
+
         return page;
     }
 }

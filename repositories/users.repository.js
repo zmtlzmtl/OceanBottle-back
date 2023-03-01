@@ -1,4 +1,4 @@
-const { Users, Scripts, plusScripts } = require("../models");
+const { Users, Scripts, plusScripts, sequelize } = require("../models");
 
 class UsersRepository {
     constructor() { }
@@ -19,7 +19,7 @@ class UsersRepository {
         });
         return user;
     };
-    myPage = async ({ userId, id }) => {
+    myScript = async ({ userId, id }) => {
         const myScript = await Scripts.findAll({
             raw: true,
             attributes: [
@@ -30,22 +30,59 @@ class UsersRepository {
                 "contributors",
                 "createdAt",
                 "updatedAt",
+                [
+                    sequelize.fn("COUNT", sequelize.col("plusScripts.ScriptId")),
+                    "plusCount",
+                ],
             ],
-            where: {userId}
+            include: [
+                {
+                    model: plusScripts,
+                    attributes: [],
+                },
+            ],
+            group: ["Scripts.scriptId"],
+            order: [["createdAt", "DESC"]],
+            where: { UserId: userId }
         })
+
+        return myScript;
+    }
+    myPlusScript = async ({ userId, id }) => {
         const myPlusScript = await plusScripts.findAll({
             raw: true,
             attributes: [
                 "plusScriptId",
-                "scriptId",
-                "content",
-                "createdAt",
-                "updatedAt",
+                "ScriptId",
+                "UserId",
+                [
+                    sequelize.fn("COUNT", sequelize.col("plusScripts.ScriptId")),
+                    "plusCount",
+                ],
             ],
-            where: {userId}
-        })
-        const page = { id, myScript, myPlusScript }
-        return page;
+            include: [
+                {
+                    model: Scripts,
+                    attributes: ["genre", "title", "contributors"],
+                },
+            ],
+            group: ["plusScripts.ScriptId"],
+            order: [["createdAt", "DESC"]],
+            where: { UserId: userId }
+        }).map((data) => {
+            return {
+                plusScriptId: data.plusScriptId,
+                ScriptId: data.ScriptId,
+                title: data.title,
+                UserId: data.UserId,
+                plusCount: data.plusCount,
+                genre: data["Script.genre"],
+                title: data["Script.title"],
+                contributors: data["contributors.id"],
+                createdAt: data.createdAt,
+                updatedAt: data.updatedAt,
+            };
+        });
     }
 }
 
