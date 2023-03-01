@@ -6,14 +6,12 @@ class plusscriptController {
   }
   createplusscript = async (req, res) => {
     try {
-      const contentschema = Joi.object({
-        content: Joi.string().required(),
-      });
-
       const { content } = req.body;
       const { scriptId } = req.params;
       const { userId } = res.locals.user;
-
+      const contentschema = Joi.object({
+        content: Joi.string().required().max(content.length),
+      });
       let tempresult = contentschema.validate(req.body);
       if (tempresult.error) {
         return res.status(400).json(tempresult.error.details[0].message);
