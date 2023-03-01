@@ -20,6 +20,7 @@ class UsersController {
 
             return res.status(201).json({ "message": "회원 가입에 성공하였습니다." });
         } catch (error) {
+            console.log(error)
             next(error)
         }
     }
@@ -33,23 +34,16 @@ class UsersController {
         try {
             const user = await this.usersService.postLoginUser({ id, password });
 
-            let expires = new Date();
-            expires.setMinutes(expires.getMinutes() + 60);
-            console.log(user)
             const token = jwt.sign(
                 { userId: user.id },
                 KEY,
                 { expiresIn: '1h' },
             );
             
-            
-            res.cookie("Authorization", `Bearer ${token}`, {
-                expires: expires, 
-            });
-            
             res.status(200).json({ "message": "로그인에 성공하셨습니다.", "Authorization": `Bearer ${token}` });
             
         } catch (error) {
+            console.log(error)
             next(error)
         }
     }
