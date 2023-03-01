@@ -40,7 +40,7 @@ class plusscriptController {
       if (!content) {
         return res.status(400).json({ msg: "plus script is required." });
       }
-      const existPlusScript = await this.plusscriptService.findOnescript({
+      const existPlusScript = await this.plusscriptService.findonePlusScripts({
         plusScriptId,
       });
 
@@ -57,7 +57,7 @@ class plusscriptController {
         content,
       });
 
-      const updatedResult = await this.plusscriptService.findOnescript({
+      const updatedResult = await this.plusscriptService.findonePlusScripts({
         plusScriptId,
       });
       return res.json({ updatedResult });
@@ -65,26 +65,27 @@ class plusscriptController {
       return res.status(400).json({ error: error.message });
     }
   };
-  deletePlusscript = async (req, res) => {
+  deletePlusscript = async (req, res, next) => {
     try {
       const { plusScriptId } = req.params;
       const { userId } = res.locals.user;
-      const willdeleted = await this.plusscriptService.findOnescript({
+      const willdeleted = await this.plusscriptService.findonePlusScripts({
         plusScriptId,
-        UserId: userId,
+        userId,
       });
+      // console.log(userId);
       if (!plusScriptId)
         return res.status(400).json({ msg: "plus script id is required." });
       if (willdeleted == null)
-        return res.status(400).send({ msg: "theres no to be deleted." });
+        return res.status(400).json({ msg: "theres no to be deleted." });
 
-      res.json({ deleted: willdeleted });
       await this.plusscriptService.deletePlusscript({
-        UserId: userId,
+        userId,
         plusScriptId,
       });
+      return res.status(200).json({ willdeleted });
     } catch (error) {
-      return res.status(400).send({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
   };
   findOnescript = async (req, res) => {
@@ -116,7 +117,7 @@ class plusscriptController {
       });
       if (plusscript3s == "")
         return res.status(400).json({ msg: "no more plus script" });
-      console.log(plusscript3s);
+
       return res.json({ plusscript3s });
     } catch (error) {
       console.log(error);
