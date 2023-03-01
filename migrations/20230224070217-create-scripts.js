@@ -30,6 +30,10 @@ module.exports = {
         type: Sequelize.STRING(3000),
         allowNull: false,
       },
+      contributors: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
