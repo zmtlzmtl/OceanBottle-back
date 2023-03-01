@@ -36,8 +36,9 @@ class ScriptsService {
   };
 
   //update
-  updateService = async ({ scriptId, genre, title, content }) => {
+  updateService = async ({ userId, scriptId, genre, title, content }) => {
     await this.scriptsRepository.updateRepo({
+      userId,
       scriptId,
       genre,
       title,
@@ -47,8 +48,8 @@ class ScriptsService {
   };
 
   //delete
-  deleteService = async ({ scriptId }) => {
-    await this.scriptsRepository.deleteRepo({ scriptId });
+  deleteService = async ({ userId, scriptId }) => {
+    await this.scriptsRepository.deleteRepo({ userId, scriptId });
     return;
   };
 

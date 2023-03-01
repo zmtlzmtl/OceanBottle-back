@@ -1,4 +1,4 @@
-const { Scripts, Users, plusScripts,sequelize } = require('../models');
+const { Scripts, Users, plusScripts, sequelize } = require('../models');
 const { Sequelize } = require("sequelize")
 
 class ScriptsRepository {
@@ -74,36 +74,34 @@ class ScriptsRepository {
     const updateScript = await Scripts.findOne({
       where: { scriptId },
     });
+    console.log(updateScript.UserId, userId)
     const plusScript = await plusScripts.findAll({
       where: { ScriptId: scriptId },
     });
+    console.log(plusScript)
 
-    if (updateScript.userId !== userId) {
-      return res
-        .status(400)
-        .json({
-          errorMessage: "해당 게시물을 수정 할 수 있는 권한이 없습니다.",
-        });
-    } else if (plusScript) {
-      return res
-        .status(401)
-        .json({
-          errorMessage:
-            "연관 된 게시물이 존재하여 해당 게시물을 수정 할 수 없습니다.",
-        });
+    if (updateScript.UserId !== userId) {
+      const e = new Error("해당 게시물을 수정 할 수 있는 권한이 없습니다. 형식이 일치하지 않습니다."); 
+      e.name = '400';
+      throw e; 
+    } 
+    if (plusScript.length !== 0 ) {
+      const e = new Error("연관 된 게시물이 존재하여 해당 게시물을 수정 할 수 없습니다."); 
+      e.name = '400';
+      throw e;
     }
 
-    await Scripts.update(
+    const upScript= await Scripts.update(
       { genre, title, content },
       {
         where: { scriptId },
       }
     );
-    return;
+    return upScript;
   };
 
   //delete
-  deleteRepo = async ({ scriptId }) => {
+  deleteRepo = async ({ userId, scriptId }) => {
     const deleteScript = await Scripts.findOne({
       where: { scriptId },
     });
@@ -111,19 +109,15 @@ class ScriptsRepository {
       where: { ScriptId: scriptId },
     });
 
-    if (deleteScript.userId !== userId) {
-      return res
-        .status(400)
-        .json({
-          errorMessage: "해당 게시물을 삭제 할 수 있는 권한이 없습니다.",
-        });
-    } else if (plusScript) {
-      return res
-        .status(401)
-        .json({
-          errorMessage:
-            "연관 된 게시물이 존재하여 해당 게시물을 삭제 할 수 없습니다.",
-        });
+    if (deleteScript.UserId !== userId) {
+      const e = new Error("해당 게시물을 삭제 할 수 있는 권한이 없습니다."); 
+      e.name = '400';
+      throw e;
+    } 
+    if (plusScript.length !== 0) {
+      const e = new Error("연관 된 게시물이 존재하여 해당 게시물을 삭제 할 수 없습니다."); 
+      e.name = '400';
+      throw e;
     }
 
     await Scripts.destroy({
