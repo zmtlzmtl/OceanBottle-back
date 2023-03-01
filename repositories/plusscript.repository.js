@@ -1,4 +1,4 @@
-const { plusScripts } = require("../models");
+const { plusScripts, Scripts, Users } = require("../models");
 
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
@@ -30,9 +30,25 @@ class PlusscriptRepository extends plusScripts {
     return plusScript;
   };
 
-  findOnescript = async ({ plusScriptId }) => {
-    const script = await plusScripts.findByPk(plusScriptId);
-    return script;
+  findOnescript = async ({ myId }) => {
+    // const user_id = await Users.findAll({ where: { id: myId } });
+    const scripts = await Users.findAll({
+      where: { id: myId },
+      include: [
+        {
+          model: Scripts,
+          include: [
+            {
+              model: plusScripts,
+              include: [
+                { model: Users, where: { id: myId }, attributes: ["id"] },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return scripts;
   };
 
   modifyingPlusscript = async ({ UserId, plusScriptId, content }) => {
