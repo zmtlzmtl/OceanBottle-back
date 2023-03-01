@@ -30,8 +30,21 @@ class PlusscriptRepository extends plusScripts {
     return plusScript;
   };
 
+  findonePlusScripts = async ({ userId, plusScriptId }) => {
+    const plusScript = await plusScripts.findAll({
+      // where: {
+      //   [Op.and]: [{ userId }, { plusScriptId }],
+      // },
+      where: {
+        UserId: userId,
+        plusScriptId,
+      },
+    });
+
+    return plusScript;
+  };
+
   findOnescript = async ({ myId }) => {
-    // const user_id = await Users.findAll({ where: { id: myId } });
     const scripts = await Users.findAll({
       where: { id: myId },
       include: [

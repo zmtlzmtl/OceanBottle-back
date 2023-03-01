@@ -21,6 +21,14 @@ class plusscriptService {
     return script;
   };
 
+  findonePlusScripts = async ({ userId, plusScriptId }) => {
+    const plusScript = await this.plusscriptRepository.findonePlusScripts({
+      userId,
+      plusScriptId,
+    });
+    return plusScript;
+  };
+
   modifyingPlusscript = async ({ UserId, plusScriptId, content }) => {
     const plusscript = await this.plusscriptRepository.modifyingPlusscript({
       plusScriptId,
