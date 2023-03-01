@@ -13,10 +13,11 @@ class ScriptsController{
         }
         try{
             await this.scriptsService.createScript({
-                userId,
+                userid,
                 genre, 
                 title, 
-                content
+                content,
+                contributors
         });
             res.status(201).json({message: "게시글 등록이 완료되었습니다.", "contributors": contributors, "paragraph": paragraph})
     }   catch(err){
