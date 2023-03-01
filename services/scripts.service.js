@@ -25,7 +25,19 @@ class ScriptsService {
   getAllService = async () => {
     const scripts = await this.scriptsRepository.getAllRepo();
 
-    return scripts;
+    return scripts.map((data) => {
+      return {
+        scriptId: data.scriptId,
+        genre: data.genre,
+        title: data.title,
+        UserId: data.UserId,
+        id: data["User.id"],
+        plusCount: data.plusCount,
+        contributors: data.contributors,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
+      };
+    });
   };
 
   //getDetail

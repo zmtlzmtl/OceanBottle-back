@@ -36,8 +36,6 @@ class ScriptsRepository {
           model: Users,
           attributes: ["id"],
         },
-      ],
-      include: [
         {
           model: plusScripts,
           attributes: [],
@@ -81,17 +79,17 @@ class ScriptsRepository {
     console.log(plusScript)
 
     if (updateScript.UserId !== userId) {
-      const e = new Error("해당 게시물을 수정 할 수 있는 권한이 없습니다. 형식이 일치하지 않습니다."); 
+      const e = new Error("해당 게시물을 수정 할 수 있는 권한이 없습니다. 형식이 일치하지 않습니다.");
       e.name = '400';
-      throw e; 
-    } 
-    if (plusScript.length !== 0 ) {
-      const e = new Error("연관 된 게시물이 존재하여 해당 게시물을 수정 할 수 없습니다."); 
+      throw e;
+    }
+    if (plusScript.length !== 0) {
+      const e = new Error("연관 된 게시물이 존재하여 해당 게시물을 수정 할 수 없습니다.");
       e.name = '400';
       throw e;
     }
 
-    const upScript= await Scripts.update(
+    const upScript = await Scripts.update(
       { genre, title, content },
       {
         where: { scriptId },
@@ -110,12 +108,12 @@ class ScriptsRepository {
     });
 
     if (deleteScript.UserId !== userId) {
-      const e = new Error("해당 게시물을 삭제 할 수 있는 권한이 없습니다."); 
+      const e = new Error("해당 게시물을 삭제 할 수 있는 권한이 없습니다.");
       e.name = '400';
       throw e;
-    } 
+    }
     if (plusScript.length !== 0) {
-      const e = new Error("연관 된 게시물이 존재하여 해당 게시물을 삭제 할 수 없습니다."); 
+      const e = new Error("연관 된 게시물이 존재하여 해당 게시물을 삭제 할 수 없습니다.");
       e.name = '400';
       throw e;
     }
@@ -128,11 +126,11 @@ class ScriptsRepository {
   //getRandom
   getRandomRepo = async () => {
     const scripts = await Scripts.findAll({
-      attributes: ["scriptId","genre", "title", "content"],
-      include:[
+      attributes: ["scriptId", "genre", "title", "content"],
+      include: [
         {
-            model: Users,
-            attributes: ["id"]
+          model: Users,
+          attributes: ["id"]
         }
       ],
       order: Sequelize.literal("rand()"),
