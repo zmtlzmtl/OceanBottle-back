@@ -8,6 +8,9 @@ const { KEY } = process.env;
 module.exports = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
+    console.log(authorization)
+    console.log(req.header)
+    console.log(req.headers)
 
     if (!authorization) {
       return res.status(403).send({
