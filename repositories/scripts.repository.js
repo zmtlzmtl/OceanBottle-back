@@ -36,8 +36,6 @@ class ScriptsRepository {
           model: Users,
           attributes: ["id"],
         },
-      ],
-      include: [
         {
           model: plusScripts,
           attributes: [],

@@ -28,6 +28,16 @@ class ScriptsService {
     return scripts;
   };
 
+  // const findLikeCount = await this.postsRepository.findLikesCount();
+
+  //   if (!allPostsData) {
+  //     throw new Error("게시글 조회에 실패하였습니다.");
+  //   }
+  //   for (let i = 0; i < allPostsData.length; i++) {
+  //     allPostsData[i].likesCount = findLikeCount[i].likesCount;
+  //   }
+  //   return allPostsData;
+
   //getDetail
   getDetailService = async ({ scriptId }) => {
     const script = await this.scriptsRepository.getDetailRepo({ scriptId });
