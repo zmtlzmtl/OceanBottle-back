@@ -54,6 +54,19 @@ class UsersController {
             next(error)
         }
     }
+    myPage = async (req, res, next) => {
+        const { userId, id } = res.locals.user;
+        console.log( userId, id )
+
+        try {
+            const page = await this.usersService.myPage({ userId, id });
+
+            return res.status(200).json({ page });
+        } catch (error) {
+            console.log(error)
+            next(error)
+        }
+    }
 }
 
 module.exports = UsersController;

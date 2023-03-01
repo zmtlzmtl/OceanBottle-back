@@ -39,5 +39,9 @@ class UsersService {
         };
         return user;
     }
+    myPage = async ({ userId, id }) => {
+        const page = await this.usersRepository.myPage({ userId, id })
+        return page;
+    }
 }
 module.exports= UsersService;

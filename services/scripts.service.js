@@ -33,6 +33,7 @@ class ScriptsService {
         UserId: data.UserId,
         id: data["User.id"],
         plusCount: data.plusCount,
+        contributors: data.contributors,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,
       };
