@@ -25,18 +25,19 @@ class ScriptsService {
   getAllService = async () => {
     const scripts = await this.scriptsRepository.getAllRepo();
 
-    return scripts;
+    return scripts.map((data) => {
+      return {
+        scriptId: data.scriptId,
+        genre: data.genre,
+        title: data.title,
+        UserId: data.UserId,
+        id: data["User.id"],
+        plusCount: data.plusCount,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
+      };
+    });
   };
-
-  // const findLikeCount = await this.postsRepository.findLikesCount();
-
-  //   if (!allPostsData) {
-  //     throw new Error("게시글 조회에 실패하였습니다.");
-  //   }
-  //   for (let i = 0; i < allPostsData.length; i++) {
-  //     allPostsData[i].likesCount = findLikeCount[i].likesCount;
-  //   }
-  //   return allPostsData;
 
   //getDetail
   getDetailService = async ({ scriptId }) => {

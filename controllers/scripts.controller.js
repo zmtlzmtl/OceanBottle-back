@@ -1,50 +1,53 @@
 const ScriptsService = require('../services/scripts.service');
 
-class ScriptsController{
+class ScriptsController {
     scriptsService = new ScriptsService();
 
     //create
-    createScript = async( req, res, next) => {
+    createScript = async (req, res, next) => {
         const { userId } = res.locals.user;
         const { genre, title, content, contributors, paragraph } = req.body;
 
-        if(!userId){
-            return{message : "로그인 후 이용 가능합니다."}
+        if (!userId) {
+            return res.status(403).json({ message: "로그인 후 이용 가능합니다." })
         }
-        try{
+        try {
             await this.scriptsService.createScript({
                 userId,
-                genre, 
-                title, 
+                genre,
+                title,
                 content,
                 contributors,
-        });
-            res.status(201).json({message: "게시글 등록이 완료되었습니다.", "contributors": contributors, "paragraph": paragraph})
-    }   catch(err){
-        next(err);
-    }
-};
+            });
+            res.status(201).json({ message: "게시글 등록이 완료되었습니다.", "contributors": contributors, "paragraph": paragraph })
+        } catch (err) {
+            console.log(err)
+            next(err);
+        }
+    };
 
     //getAll
     getAllController = async (req, res, next) => {
         try {
-          const scripts = await this.scriptsService.getAllService();
+            const scripts = await this.scriptsService.getAllService();
 
-          res.status(200).json({ scripts });
+            res.status(200).json({ scripts });
         } catch (err) {
+            console.log(err)
             next(err);
         }
     }
 
     //getDetail
-    getDetailController = async(req, res, next) => {
+    getDetailController = async (req, res, next) => {
         const { scriptId } = req.params;
-        try{
+        try {
             const script = await this.scriptsService.getDetailService({ scriptId });
             res.status(200).json({ script });
-        }catch(err){
+        } catch (err) {
+            console.log(err)
             next(err);
-        };        
+        };
     }
 
     //update
@@ -61,20 +64,26 @@ class ScriptsController{
             const updateScript = await this.scriptsService.updateService({ userId, scriptId, genre, title, content });
             res.status(200).json({ message: "게시물 수정이 완료되었습니다." })
         } catch (err) {
+            console.log(err)
             next(err);
         }
     }
 
     //delete
-    deleteController = async(req, res, next)=> {
+    deleteController = async (req, res, next) => {
         const { userId } = res.locals.user;
         const { scriptId } = req.params;
-        if(!userId){
-            return{message : "로그인 후 이용 가능합니다."}
+        if (!userId) {
+            return { message: "로그인 후 이용 가능합니다." }
         }
-        await this.scriptsService.deleteService({ userId, scriptId });
+        try {
+            await this.scriptsService.deleteService({ userId, scriptId });
 
-        res.status(200).json({ message : "게시물 삭제가 완료 되었습니다."})
+            res.status(200).json({ message: "게시물 삭제가 완료 되었습니다." })
+        } catch (err) {
+            console.log(err)
+            next(err);
+        }
     }
 
     //getRandom
@@ -84,6 +93,7 @@ class ScriptsController{
 
             res.status(200).json({ randomScripts });
         } catch (err) {
+            console.log(err)
             next(err);
         }
     }
