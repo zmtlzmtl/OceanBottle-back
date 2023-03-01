@@ -13,10 +13,11 @@ class ScriptsController{
         }
         try{
             await this.scriptsService.createScript({
-                userId,
+                userid,
                 genre, 
                 title, 
-                content
+                content,
+                contributors
         });
             res.status(201).json({message: "게시글 등록이 완료되었습니다.", "contributors": contributors, "paragraph": paragraph})
     }   catch(err){
@@ -58,9 +59,6 @@ class ScriptsController{
         }
         try {
             const updateScript = await this.scriptsService.updateService({ userId, scriptId, genre, title, content });
-            if (updateScript.length !== 1) {
-                return res.status(401).json({ errorMessage: "연관 된 PlusScript 가 생성되어 있어 삭제 할 수 없습니다." })
-            }
             res.status(200).json({ message: "게시물 수정이 완료되었습니다." })
         } catch (err) {
             next(err);
