@@ -25,7 +25,6 @@ class ScriptsRepository{
             ],
             order: [["createdAt", "DESC"]],
         });
-        
 
         return scripts;
     }
@@ -55,7 +54,7 @@ class ScriptsRepository{
             where:{scriptId}
         });
         const plusScript = await plusScripts.findAll({
-            where:{ script }
+            where:{ ScriptId : scriptId }
         });
         
         if(updateScript.userId !== userId){
@@ -63,8 +62,7 @@ class ScriptsRepository{
         }else if( plusScript ){
             return res.status(401).json({ errorMessage: '연관 된 게시물이 존재하여 해당 게시물을 수정 할 수 없습니다.'})
         }
-        
-    
+           
         await Scripts.update(
             {genre, title, content},
             {
@@ -80,7 +78,7 @@ class ScriptsRepository{
             where:{scriptId}
         });
         const plusScript = await plusScripts.findAll({
-            where:{ script }
+            where:{ ScriptId : scriptId }
         });
         
         if(deleteScript.userId !== userId){
