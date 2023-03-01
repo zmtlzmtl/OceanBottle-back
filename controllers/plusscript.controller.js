@@ -40,23 +40,12 @@ class plusscriptController {
       if (!content) {
         return res.status(400).json({ msg: "plus script is required." });
       }
-      const existPlusScript = await this.plusscriptService.findonePlusScripts({
-        plusScriptId,
-      });
-
-      if (existPlusScript == null)
-        return res.status(400).json({ msg: "theres no existing plus script." });
-
-      if (existPlusScript.content == content) {
-        return res.status(400).json({ msg: "content need to be changed." });
-      }
 
       await this.plusscriptService.modifyingPlusscript({
         plusScriptId,
-        UserId: userId,
+        userId,
         content,
       });
-
       const updatedResult = await this.plusscriptService.findonePlusScripts({
         plusScriptId,
       });
@@ -71,7 +60,6 @@ class plusscriptController {
       const { userId } = res.locals.user;
       const willdeleted = await this.plusscriptService.findonePlusScripts({
         plusScriptId,
-        userId,
       });
       // console.log(userId);
       if (!plusScriptId)

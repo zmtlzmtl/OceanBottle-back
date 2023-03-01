@@ -21,26 +21,25 @@ class plusscriptService {
     return script;
   };
 
-  findonePlusScripts = async ({ userId, plusScriptId }) => {
+  findonePlusScripts = async ({ plusScriptId }) => {
     const plusScript = await this.plusscriptRepository.findonePlusScripts({
-      userId,
       plusScriptId,
     });
     return plusScript;
   };
 
-  modifyingPlusscript = async ({ UserId, plusScriptId, content }) => {
+  modifyingPlusscript = async ({ userId, plusScriptId, content }) => {
     const plusscript = await this.plusscriptRepository.modifyingPlusscript({
       plusScriptId,
-      UserId,
+      userId,
       content,
     });
     return plusscript;
   };
-  deletePlusscript = async ({ plusScriptId, UserId }) => {
+  deletePlusscript = async ({ plusScriptId, userId }) => {
     const plusscript = await this.plusscriptRepository.deletePlusscript({
       plusScriptId,
-      UserId,
+      userId,
     });
     return plusscript;
   };
