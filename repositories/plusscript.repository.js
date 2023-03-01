@@ -30,13 +30,9 @@ class PlusscriptRepository extends plusScripts {
     return plusScript;
   };
 
-  findonePlusScripts = async ({ userId, plusScriptId }) => {
-    const plusScript = await plusScripts.findAll({
-      // where: {
-      //   [Op.and]: [{ userId }, { plusScriptId }],
-      // },
+  findonePlusScripts = async ({ plusScriptId }) => {
+    const plusScript = await plusScripts.findOne({
       where: {
-        UserId: userId,
         plusScriptId,
       },
     });
@@ -64,12 +60,12 @@ class PlusscriptRepository extends plusScripts {
     return scripts;
   };
 
-  modifyingPlusscript = async ({ UserId, plusScriptId, content }) => {
+  modifyingPlusscript = async ({ userId, plusScriptId, content }) => {
     const plusscript = await plusScripts.update(
       { content },
       {
         where: {
-          [Op.and]: [{ UserId }, { plusScriptId }],
+          [Op.and]: [{ UserId: userId }, { plusScriptId }],
         },
       }
     );
@@ -77,10 +73,10 @@ class PlusscriptRepository extends plusScripts {
     return plusscript;
   };
 
-  deletePlusscript = async ({ plusScriptId, UserId }) => {
+  deletePlusscript = async ({ plusScriptId, userId }) => {
     const plusscript = await plusScripts.destroy({
       where: {
-        [Op.and]: [{ UserId }, { plusScriptId }],
+        [Op.and]: [{ UserId: userId }, { plusScriptId }],
       },
     });
 
