@@ -9,7 +9,7 @@ class ScriptsService{
     }
     
     //create
-    createScript = async({userId,genre, title, content}) =>{       
+    createScript = async({userId, genre, title, content}) =>{       
         await this.scriptsRepository.createScript({userId, genre, title, content})
         
         return;
