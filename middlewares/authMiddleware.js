@@ -13,7 +13,6 @@ module.exports = async (req, res, next) => {
     }
     const [authType, authToken] = (Authorization ?? "").split(" ");
     console.log(authToken)
-
     // 토큰 존재 확인
     if (authType !== "Bearer" || !authToken) {
       res.status(400).json({
@@ -22,8 +21,10 @@ module.exports = async (req, res, next) => {
       return;
     }
     const { userId } = jwt.verify(authToken, KEY);
-    const user = await Users.findByPk(userId);
-
+    const user = await Users.findOne({
+      where: {id: userId}
+    });
+    console.log(userId)
     res.locals.user = user;
     next();
   } catch (error) {
