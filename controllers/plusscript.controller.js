@@ -1,5 +1,6 @@
 const plusscriptService = require("../services/plusscript.service");
 const Joi = require("joi");
+const { Users } = require("../models");
 class plusscriptController {
   constructor() {
     this.plusscriptService = new plusscriptService();
@@ -88,15 +89,16 @@ class plusscriptController {
   };
   findOnescript = async (req, res) => {
     try {
-      const { plusScriptId } = req.params;
-      const plusscript = await this.plusscriptService.findOnescript({
-        plusScriptId,
+      const { myId } = req.query;
+      const { userId } = res.locals.user;
+      const myscript = await this.plusscriptService.findOnescript({
+        userId,
+        myId,
       });
-      if (!plusScriptId)
-        return res.status(400).json({ msg: "plus script input required." });
-      if (plusscript == null)
-        return res.status(400).json({ msg: "there is no plus script" });
-      return res.status(200).json({ plusscript });
+      if (!myId) return res.status(400).json({ msg: "myId is required." });
+      if (myscript == "")
+        return res.status(400).json({ msg: "no existing myId." });
+      return res.status(200).json({ myscript });
     } catch (error) {
       console.log(error);
       return res.status(400).json({ error: error.message });

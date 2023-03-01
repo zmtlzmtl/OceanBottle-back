@@ -35,9 +35,9 @@ class UsersController {
 
             let expires = new Date();
             expires.setMinutes(expires.getMinutes() + 60);
-
+            console.log(user)
             const token = jwt.sign(
-                { userId: user.userId },
+                { userId: user.id },
                 KEY,
                 { expiresIn: '1h' },
             );

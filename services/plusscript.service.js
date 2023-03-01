@@ -13,9 +13,10 @@ class plusscriptService {
     return plusscript;
   };
 
-  findOnescript = async ({ plusScriptId }) => {
+  findOnescript = async ({ userId, myId }) => {
     const script = await this.plusscriptRepository.findOnescript({
-      plusScriptId,
+      userId,
+      myId,
     });
     return script;
   };

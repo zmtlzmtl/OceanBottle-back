@@ -7,7 +7,7 @@ const errorMiddleware = (error, req, res, next) => {
     case "404":
       return res.status(404).json({ message: error.message }); //저장소에 없으면 
     case "412":
-      return res.status(412).json({ message: error.message }); //값을 안들고옴
+      return res.status(412).json({ message: error.message }); //값을 안들고옴 ex. body, params
     default:
       return res.status(500).json({ message: "알 수 없는 error가 발생하였습니다." });
   }
