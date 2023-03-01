@@ -19,7 +19,7 @@ plusrouter.delete(
   plusscriptController.deletePlusscript
 );
 
-plusrouter.get("/:plusScriptId", plusscriptController.findOnescript);
+plusrouter.get("/", authMiddleware, plusscriptController.findOnescript);
 
 plusrouter.get("/", plusscriptController.getting3plusscript);
 
