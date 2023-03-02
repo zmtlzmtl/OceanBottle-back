@@ -48,13 +48,25 @@ class UsersRepository {
 
         return myScript;
     }
-    myPlusScript = async ({ userId, id }) => {
-        const myPlusScript = await plusScripts.findAll({
+    findPlusScript = async ({ userId, id }) => {
+        const plusScriptWirte = await plusScripts.findAll({
+            raw: true,
+            attributes: [ "ScriptId" ],
+            where: {UserId: userId}
+        })
+        return plusScriptWirte;
+    }
+    myPlusScript = async ({ scriptId }) => {
+        const myScript = await Scripts.findOne({
             raw: true,
             attributes: [
-                "plusScriptId",
-                "ScriptId",
+                "scriptId",
+                "genre",
+                "title",
                 "UserId",
+                "contributors",
+                "createdAt",
+                "updatedAt",
                 [
                     sequelize.fn("COUNT", sequelize.col("plusScripts.ScriptId")),
                     "plusCount",
@@ -62,27 +74,16 @@ class UsersRepository {
             ],
             include: [
                 {
-                    model: Scripts,
-                    attributes: ["genre", "title", "contributors"],
+                    model: plusScripts,
+                    attributes: [],
                 },
             ],
-            group: ["plusScripts.ScriptId"],
+            group: ["Scripts.scriptId"],
             order: [["createdAt", "DESC"]],
-            where: { UserId: userId }
-        }).map((data) => {
-            return {
-                plusScriptId: data.plusScriptId,
-                ScriptId: data.ScriptId,
-                title: data.title,
-                UserId: data.UserId,
-                plusCount: data.plusCount,
-                genre: data["Script.genre"],
-                title: data["Script.title"],
-                contributors: data["contributors.id"],
-                createdAt: data.createdAt,
-                updatedAt: data.updatedAt,
-            };
-        });
+            where: { scriptId: scriptId }
+        })
+
+        return myScript;
     }
 }
 
