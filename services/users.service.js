@@ -41,9 +41,16 @@ class UsersService {
     }
     myPage = async ({ userId, id }) => {
         const myScript = await this.usersRepository.myScript({ userId, id });
-        const myPlusScript = await this.usersRepository.myScript({ userId, id });
-        
-        const page = {id, myScript, myPlusScript}
+        const myPlusScript = await this.usersRepository.findPlusScript({ userId, id });
+
+        // console.log(myPlusScript[0].ScriptId)
+        // console.log(myPlusScript)
+        for (let i = 0; i < myPlusScript.length; i++) {
+            myPlusScript[i] = await this.usersRepository.myPlusScript({
+                scriptId: myPlusScript[i].ScriptId
+            })
+        }
+        const page = { id, myScript, myPlusScript }
 
         return page;
     }
